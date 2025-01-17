@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const initialVideos = [
   { id: '1', title: 'Video 1', src: '/animation.mp4' },
@@ -9,6 +9,7 @@ const initialVideos = [
 
 const Home = () => {
   const [videos, setVideos] = useState(initialVideos);
+  const videoRefs = useRef([]);
 
   const handleDragStart = (event, index) => {
     event.dataTransfer.setData('dragIndex', index);
@@ -16,18 +17,34 @@ const Home = () => {
 
   const handleDrop = (event, dropIndex) => {
     const dragIndex = parseInt(event.dataTransfer.getData('dragIndex'), 10);
-
     if (dragIndex === dropIndex) return;
 
     const updatedVideos = [...videos];
     const [draggedVideo] = updatedVideos.splice(dragIndex, 1);
     updatedVideos.splice(dropIndex, 0, draggedVideo);
-
     setVideos(updatedVideos);
   };
 
   const handleDragOver = (event) => {
     event.preventDefault();
+  };
+
+  const playAllVideos = async () => {
+    for (let i = 0; i < videos.length; i++) {
+      const videoElement = videoRefs.current[i];
+      if (videoElement) {
+        videoElement.play();
+        
+        // Wait for the video to finish before moving to the next one
+        await new Promise((resolve) => {
+          const onVideoEnd = () => {
+            videoElement.removeEventListener('ended', onVideoEnd); // Clean up event listener
+            resolve(); // Move to the next video
+          };
+          videoElement.addEventListener('ended', onVideoEnd);
+        });
+      }
+    }
   };
 
   return (
@@ -40,6 +57,20 @@ const Home = () => {
         borderRadius: '8px',
       }}
     >
+      <button
+        onClick={playAllVideos}
+        style={{
+          marginBottom: '20px',
+          padding: '10px 20px',
+          background: '#007bff',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+        }}
+      >
+        Play All
+      </button>
       {videos.map((video, index) => (
         <div
           key={video.id}
@@ -61,6 +92,7 @@ const Home = () => {
         >
           {/* Video Preview */}
           <video
+            ref={(el) => (videoRefs.current[index] = el)}
             src={video.src}
             width="150"
             height="80"
