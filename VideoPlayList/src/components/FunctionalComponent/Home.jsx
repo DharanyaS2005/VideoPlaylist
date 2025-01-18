@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './Home.css';
 
 const initialVideosLeft = [
@@ -16,7 +16,6 @@ const initialVideosRight = [
 const Home = () => {
   const [videosLeft, setVideosLeft] = useState(initialVideosLeft);
   const [videosRight, setVideosRight] = useState(initialVideosRight);
-  const videoRefs = useRef([]);
 
   const handleDragStart = (event, video, from) => {
     event.dataTransfer.setData('video', JSON.stringify(video));
@@ -27,31 +26,27 @@ const Home = () => {
     const video = JSON.parse(event.dataTransfer.getData('video'));
     const from = event.dataTransfer.getData('from');
 
-    if (target === 'left' && from === 'right') {
-      setVideosLeft((prev) => [...prev, video]);
-      setVideosRight((prev) => prev.filter((v) => v.id !== video.id));
-    } else if (target === 'right' && from === 'left') {
-      setVideosRight((prev) => [...prev, video]);
-      setVideosLeft((prev) => prev.filter((v) => v.id !== video.id));
+    if (from !== target) {
+      if (target === 'left') {
+        setVideosLeft([...videosLeft, video]);
+        setVideosRight(videosRight.filter((v) => v.id !== video.id));
+      } else {
+        setVideosRight([...videosRight, video]);
+        setVideosLeft(videosLeft.filter((v) => v.id !== video.id));
+      }
     }
   };
 
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
+  const handleDragOver = (event) => event.preventDefault();
 
   const playAllVideos = async () => {
-    for (let i = 0; i < videosLeft.length; i++) {
-      const videoElement = videoRefs.current[i];
+    for (let video of videosLeft) {
+      const videoElement = document.getElementById(video.id);
       if (videoElement) {
-        videoElement.play();
-        await new Promise((resolve) => {
-          const onVideoEnd = () => {
-            videoElement.removeEventListener('ended', onVideoEnd);
-            resolve();
-          };
-          videoElement.addEventListener('ended', onVideoEnd);
-        });
+        await videoElement.play();
+        await new Promise((resolve) =>
+          videoElement.addEventListener('ended', resolve, { once: true })
+        );
       }
     }
   };
@@ -64,12 +59,12 @@ const Home = () => {
         onDrop={(event) => handleDrop(event, 'left')}
       >
         <div className="header">
-        <h3>Your PlayList</h3>
-        <button className="play-all-btn" onClick={playAllVideos}>
-          Play All
-        </button>
+          <h3>Your Playlist</h3>
+          <button className="play-all-btn" onClick={playAllVideos}>
+            Play All
+          </button>
         </div>
-        {videosLeft.map((video, index) => (
+        {videosLeft.map((video) => (
           <div
             key={video.id}
             className="video-card"
@@ -77,7 +72,7 @@ const Home = () => {
             onDragStart={(event) => handleDragStart(event, video, 'left')}
           >
             <video
-              ref={(el) => (videoRefs.current[index] = el)}
+              id={video.id}
               src={video.src}
               width="150"
               height="80"
@@ -95,7 +90,7 @@ const Home = () => {
         onDrop={(event) => handleDrop(event, 'right')}
       >
         <div className="header">
-        <h3> All videos</h3>
+          <h3>All Videos</h3>
         </div>
         {videosRight.map((video) => (
           <div
@@ -105,6 +100,7 @@ const Home = () => {
             onDragStart={(event) => handleDragStart(event, video, 'right')}
           >
             <video
+              id={video.id}
               src={video.src}
               width="150"
               height="80"
