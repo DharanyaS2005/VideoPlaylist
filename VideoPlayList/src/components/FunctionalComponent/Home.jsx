@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import './Home.css';
 
 const initialVideosLeft = [
-  { id: '1', title: 'Video 1', src: '/animation.mp4' },
-  { id: '2', title: 'Video 2', src: '/Coca-Cola.mp4' },
+  { id: '1', title: 'Video 1', src: '/VideoPlaylist/animation.mp4' },
+  { id: '2', title: 'Video 2', src: '/VideoPlaylist/Coca-Cola.mp4' },
 ];
 
 const initialVideosRight = [
-  { id: '3', title: 'Video 3', src: '/Rainy_Day.mp4' },
-  { id: '4', title: 'Video 4', src: '/Beach.mp4' },
-  { id: '5', title: 'Video 5', src: '/Explainer.mp4' },
-  { id: '6', title: 'Video 6', src: '/Puppies.mp4' },
+  { id: '3', title: 'Video 3', src: '/VideoPlaylist/Rainy_Day.mp4' },
+  { id: '4', title: 'Video 4', src: '/VideoPlaylist/Beach.mp4' },
+  { id: '5', title: 'Video 5', src: '/VideoPlaylist/Explainer.mp4' },
+  { id: '6', title: 'Video 6', src: '/VideoPlaylist/Puppies.mp4' },
 ];
 
 const Home = () => {
