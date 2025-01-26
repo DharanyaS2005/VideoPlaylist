@@ -1,21 +1,81 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #007bff, #6a11cb);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+/* Navbar styles */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #590888;
+  color: white;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: right;
+  list-style: none;
+  margin-right:  10px;
+  padding: 0;
+}
+
+.nav-list li {
+  margin: 0 15px;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.link:hover {
+  color: #030303;
+}
+
+/* Main content adjustments to avoid overlap with navbar */
 .container {
-    display: flex;
-    gap: 20px;
-    padding: 10px;
-    border-radius: 3px;
-  }
+  margin-top: 60px; /* Adjust to match the navbar height */
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+
+
+.container {
+  margin-top: 60px; 
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  border-radius: 3px;
+}
+
   
   .left-section,
   .right-section {
     min-width:600px;
     flex: 1;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     min-height: 400px;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Allows scrolling for video lists */
+    overflow-y: auto; 
   }
   
   .header {
@@ -31,7 +91,7 @@
   .play-all-btn {
     margin: 10px 0;
     padding: 10px 20px;
-    background: #007bff;
+    background: linear-gradient(135deg, #007bff, #6a11cb);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -40,7 +100,7 @@
   }
   
   .play-all-btn:hover {
-    background: #0056b3;
+    background: #590888;
   }
   
   .video-list {

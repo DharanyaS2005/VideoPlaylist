@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Home.css';
 
 const initialVideosLeft = [
@@ -17,16 +18,25 @@ const Home = () => {
   const [videosLeft, setVideosLeft] = useState(initialVideosLeft);
   const [videosRight, setVideosRight] = useState(initialVideosRight);
 
+  const navigate = useNavigate();
+
   const handleDragStart = (event, video, from) => {
     event.dataTransfer.setData('video', JSON.stringify(video));
     event.dataTransfer.setData('from', from);
   };
 
-  const handleDrop = (event, target) => {
+  const handleDrop = (event, target, index = null) => {
     const video = JSON.parse(event.dataTransfer.getData('video'));
     const from = event.dataTransfer.getData('from');
 
-    if (from !== target) {
+    if (from === target) {
+      if (target === 'left' && index !== null) {
+        // Reordering within the left section
+        const newVideosLeft = [...videosLeft];
+        newVideosLeft.splice(index, 0, newVideosLeft.splice(newVideosLeft.indexOf(video), 1)[0]);
+        setVideosLeft(newVideosLeft);
+      }
+    } else {
       if (target === 'left') {
         setVideosLeft([...videosLeft, video]);
         setVideosRight(videosRight.filter((v) => v.id !== video.id));
@@ -53,6 +63,15 @@ const Home = () => {
 
   return (
     <div className="container">
+      {/* Navigation Bar */}
+      <nav className="nav-bar">
+        <ol className="nav-list">
+          <li><Link to="/home" className="link">Home</Link></li>
+          <li><Link to="/" className="link">Logout</Link></li>
+        </ol>
+      </nav>
+
+      {/* Main Content */}
       <div
         className="left-section"
         onDragOver={handleDragOver}
@@ -64,12 +83,14 @@ const Home = () => {
             Play All
           </button>
         </div>
-        {videosLeft.map((video) => (
+        {videosLeft.map((video, index) => (
           <div
             key={video.id}
             className="video-card"
             draggable
             onDragStart={(event) => handleDragStart(event, video, 'left')}
+            onDrop={(event) => handleDrop(event, 'left', index)} // Added index for reordering
+            onDragOver={handleDragOver}
           >
             <video
               id={video.id}

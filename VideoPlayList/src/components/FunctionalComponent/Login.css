@@ -1,0 +1,107 @@
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+ 
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; 
+    width: 100%; 
+    background: linear-gradient(135deg, #007bff, #6a11cb);
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  .button-container button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background: linear-gradient(225deg, #6a11cb, #3e055f);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .button-container button:hover {
+    transform: scale(1.1);
+  }
+ 
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+  }
+  
+  .modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .modal-content input {
+    width: 90%;
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .modal-buttons {
+    margin-top: 10px;
+  }
+  
+  .modal-buttons button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .modal-buttons button:first-child {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .modal-buttons button:last-child {
+    background-color: #ccc;
+    color: #333;
+  }
+  
+  .modal-buttons button:first-child:hover {
+    background-color: #0056b3;
+  }
+  
+  .modal-buttons button:last-child:hover {
+    background-color: #aaa;
+  }
+  
