@@ -63,15 +63,12 @@ const Home = () => {
 
   return (
     <div className="container">
-      {/* Navigation Bar */}
       <nav className="nav-bar">
         <ol className="nav-list">
           <li><Link to="/home" className="link">Home</Link></li>
           <li><Link to="/" className="link">Logout</Link></li>
         </ol>
       </nav>
-
-      {/* Main Content */}
       <div
         className="left-section"
         onDragOver={handleDragOver}

@@ -6,7 +6,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState(''); // Tracks whether it's Login or Signup
+  const [modalType, setModalType] = useState(''); 
   const navigate = useNavigate();
 
   const handleOpenModal = (type) => {
@@ -45,7 +45,7 @@ const Login = () => {
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
-            <h2>{modalType}</h2> {/* Heading changes dynamically */}
+            <h2>{modalType}</h2>
             <input
               type="text"
               placeholder="Enter username"
